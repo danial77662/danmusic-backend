@@ -1,0 +1,24 @@
+{
+  "name": "danmusic",
+  "private": true,
+  "version": "0.0.0",
+  
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
+}
