@@ -6,7 +6,11 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173'
+  origin: [
+    'https://danmusic.online',
+    'https://www.danmusic.online',
+    'http://localhost:5173'
+  ]
 }));
 
 const JWT_SECRET = 'danmusic_super_secret_key_2026';
