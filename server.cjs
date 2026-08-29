@@ -204,7 +204,3 @@ app.listen(PORT, () => {
   console.log(`[DanMusic Server] Running on http://localhost:${PORT}`);
 });
 
-const PORT = 5001;
-app.listen(PORT, () => {
-  console.log(`[DanMusic Server] Running on http://localhost:${PORT}`);
-});
