@@ -5,6 +5,16 @@ const cors = require('cors');
 
 const app = express();
 
+app.options('*', cors());
+app.use(express.json());
+
+// Add the root route right here:
+app.get('/', (req, res) => {
+  res.status(200).send('DanMusic API Server is running successfully.');
+});
+
+const JWT_SECRET = process.env.JWT_SECRET || 'danmusic_super_secret_key_2026';
+
 // 1. Production-Grade CORS Middleware (handles standard & preflight OPTIONS)
 app.use(cors({
   origin: '*',
