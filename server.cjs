@@ -3,6 +3,15 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 
+// Enable CORS for all origins and handle preflight OPTIONS requests
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Express preflight handler
+app.options('*', cors());
 const app = express();
 app.use(express.json());
 app.use(cors({
