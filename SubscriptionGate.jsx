@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const API_URL = 'https://danmusic-backend-api.vercel.app';
+const API_URL = 'https://api.danmusic.online';
 
 // Lets any component under SubscriptionGate (e.g. DanMusic) read the
 // logged-in user, whether they're premium, and trigger upgrade/logout,
