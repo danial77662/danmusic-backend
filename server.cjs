@@ -3,36 +3,34 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
 
+// 1. Initialize Express App FIRST
 const app = express();
 
-app.options('*', cors());
+// 2. Middleware: Handle Private Network Access (PNA) for local dev calls from HTTPS origins
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Private-Network', 'true');
+  next();
+});
+
+// 3. Middleware: Production-Grade CORS Configuration
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Access-Control-Allow-Private-Network'],
+  credentials: true
+}));
+
+// 4. Middleware: Parse JSON payloads
 app.use(express.json());
 
-// Add the root route right here:
+// Root health check route
 app.get('/', (req, res) => {
   res.status(200).send('DanMusic API Server is running successfully.');
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'danmusic_super_secret_key_2026';
 
-// 1. Production-Grade CORS Middleware (handles standard & preflight OPTIONS)
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  credentials: true
-}));
-
-// Handle preflight requests globally
-app.options('*', cors());
-
-// Parse incoming JSON payloads
-app.use(express.json());
-
-// Secret Configuration
-const JWT_SECRET = process.env.JWT_SECRET || 'danmusic_super_secret_key_2026';
-
-// 2. Persistent global memory store across Vercel warm lambda invocations
+// Persistent global memory store across Vercel warm lambda invocations
 globalThis.users = globalThis.users || [];
 const users = globalThis.users;
 
@@ -50,7 +48,7 @@ const createToken = (user) => {
   );
 };
 
-// 3. Middleware: Enforce Active Subscription
+// Middleware: Enforce Active Subscription
 const requireActiveSubscription = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -77,7 +75,7 @@ const requireActiveSubscription = (req, res, next) => {
   }
 };
 
-// --- ROUTES ---
+// --- API ROUTES ---
 
 // Healthcheck Route
 app.get('/api/health', (req, res) => {
